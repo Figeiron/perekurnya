@@ -1,0 +1,349 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>Перекурня</title>
+<style>
+  :root{
+    --paper: #ece6d9;
+    --paper-raised: #f5f0e4;
+    --ink: #2a231d;
+    --ink-soft: #5b5347;
+    --ember: #c1602c;
+    --ember-deep: #9c4a20;
+    --smoke: #8f887a;
+    --steel: #55605a;
+    --line: rgba(42,35,29,0.16);
+    --shadow: rgba(42,35,29,0.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #211c18;
+      --paper-raised: #2a2420;
+      --ink: #ece3d4;
+      --ink-soft: #b8ac9a;
+      --ember: #e07b3e;
+      --ember-deep: #f0925a;
+      --smoke: #7c766a;
+      --steel: #8a9a90;
+      --line: rgba(236,227,212,0.14);
+      --shadow: rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #211c18;
+    --paper-raised: #2a2420;
+    --ink: #ece3d4;
+    --ink-soft: #b8ac9a;
+    --ember: #e07b3e;
+    --ember-deep: #f0925a;
+    --smoke: #7c766a;
+    --steel: #8a9a90;
+    --line: rgba(236,227,212,0.14);
+    --shadow: rgba(0,0,0,0.45);
+  }
+
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .display{
+    font-family: Haettenschweiler, "Arial Narrow Bold", "Arial Narrow", Impact, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+  .label{
+    font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    color: var(--smoke);
+  }
+
+  a{ color: inherit; }
+  .wrap{ max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 0%, var(--paper-raised), transparent 60%),
+      var(--ink);
+    color: var(--paper);
+    padding: 5rem 0 6rem;
+  }
+  .hero .wrap{ position: relative; z-index: 2; }
+  .smoke-layer{
+    position: absolute; inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .wisp{
+    position: absolute;
+    bottom: -10%;
+    width: 220px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(236,227,212,0.16), rgba(236,227,212,0) 70%);
+    filter: blur(6px);
+    animation: drift 14s ease-in-out infinite;
+  }
+  .wisp.w1{ left: 8%; animation-delay: 0s; }
+  .wisp.w2{ left: 48%; width: 160px; height: 320px; animation-delay: -5s; animation-duration: 18s; }
+  .wisp.w3{ left: 78%; width: 260px; height: 460px; animation-delay: -9s; animation-duration: 16s; }
+  @keyframes drift{
+    0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity: 0.5; }
+    50%  { transform: translate(3%, -18%) scale(1.15) rotate(4deg); opacity: 0.9; }
+    100% { transform: translate(-2%, -38%) scale(1.3) rotate(-3deg); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .wisp{ animation: none; opacity: 0.35; }
+  }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    color: var(--ember-deep);
+    font-family: ui-monospace, Consolas, monospace;
+    text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.75rem;
+    margin-bottom: 1.4rem;
+  }
+  .eyebrow::before{
+    content:""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--ember); box-shadow: 0 0 10px 2px var(--ember);
+  }
+  .hero h1{
+    font-size: clamp(3.2rem, 11vw, 6.4rem);
+    line-height: 0.92;
+    margin: 0 0 1.1rem;
+    color: var(--paper);
+  }
+  .hero h1 span{ color: var(--ember); }
+  .hero p.lede{
+    max-width: 34rem;
+    font-size: 1.2rem;
+    color: rgba(236,227,212,0.78);
+    margin: 0 0 2.2rem;
+  }
+  .hero-stats{
+    display:flex; flex-wrap:wrap; gap: 2.2rem;
+    border-top: 1px solid rgba(236,227,212,0.18);
+    padding-top: 1.6rem;
+  }
+  .stat b{
+    display:block; font-family: ui-monospace, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.6rem; color: var(--ember-deep);
+  }
+  .stat span{ font-size: 0.78rem; color: rgba(236,227,212,0.6); }
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{ padding: 4.5rem 0; border-bottom: 1px solid var(--line); }
+  .block h2{
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: 0 0 0.4rem;
+  }
+  .block .sub{ color: var(--ink-soft); margin: 0 0 2.4rem; max-width: 36rem; }
+
+  /* ---------- RULES ---------- */
+  .rules{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .rule{
+    background: var(--paper-raised);
+    padding: 1.6rem 1.5rem;
+    position: relative;
+  }
+  .rule .num{
+    font-family: ui-monospace, Consolas, monospace;
+    color: var(--ember);
+    font-size: 0.8rem;
+    display:block; margin-bottom: 0.6rem;
+  }
+  .rule p{ margin: 0; font-size: 1.02rem; }
+
+  /* ---------- SCHEDULE (split-flap board) ---------- */
+  .board{
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 18px 40px -20px var(--shadow);
+  }
+  .board-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px dashed rgba(236,227,212,0.16);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .board-row:last-child{ border-bottom: none; }
+  .board-time{
+    font-family: ui-monospace, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.7rem;
+    letter-spacing: 0.05em;
+    color: var(--ember-deep);
+    min-width: 5.5ch;
+  }
+  .board-name{ flex: 1 1 auto; font-size: 1rem; color: rgba(236,227,212,0.86); }
+  .board-tag{
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--smoke);
+    border: 1px solid rgba(236,227,212,0.2);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  /* ---------- ROSTER ---------- */
+  .roster{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1rem;
+  }
+  .card{
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.3rem;
+    display:flex; gap: 0.9rem; align-items:flex-start;
+  }
+  .chip{
+    flex: none;
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family: ui-monospace, Consolas, monospace;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--ember) 20%, transparent);
+    color: var(--ember-deep);
+    border: 1px solid color-mix(in srgb, var(--ember) 40%, transparent);
+  }
+  .card h3{ margin: 0 0 0.2rem; font-size: 1rem; }
+  .card p{ margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 3rem 0 4rem;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap: 1.5rem; flex-wrap: wrap;
+  }
+  footer .plaque{
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.78rem; color: var(--smoke); letter-spacing: 0.04em;
+  }
+  footer .mark{
+    font-family: Haettenschweiler, "Arial Narrow", Impact, sans-serif;
+    font-size: 1.3rem; color: var(--ink);
+  }
+  footer .mark span{ color: var(--ember); }
+
+  @media (max-width: 560px){
+    .hero{ padding: 3.6rem 0 4rem; }
+    section.block{ padding: 3.2rem 0; }
+  }
+</style>
+
+<div class="hero">
+  <div class="smoke-layer" aria-hidden="true">
+    <div class="wisp w1"></div>
+    <div class="wisp w2"></div>
+    <div class="wisp w3"></div>
+  </div>
+  <div class="wrap">
+    <div class="eyebrow">п'ять хвилин поза графіком</div>
+    <h1 class="display">ПЕРЕ<span>КУРНЯ</span></h1>
+    <p class="lede">Місце біля чорного ходу, де офіс на п’ять хвилин перестає бути офісом. Без порядку денного, без дедлайнів — тільки дим і чесні розмови.</p>
+    <div class="hero-stats">
+      <div class="stat"><b>5 хв</b><span>середня тривалість</span></div>
+      <div class="stat"><b>4</b><span>сесії на день</span></div>
+      <div class="stat"><b>№2</b><span>вихід, під козирком</span></div>
+      <div class="stat"><b>100%</b><span>чесності про начальство</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Статут перекурні</h2>
+    <p class="sub">Ніхто це не писав офіційно, але порушувати не варто — перевірено поколіннями співробітників.</p>
+    <div class="rules">
+      <div class="rule"><span class="num">01</span><p>Хто прийшов останнім — той переказує, що пропустив.</p></div>
+      <div class="rule"><span class="num">02</span><p>Розмови про роботу — не раніше другої затяжки.</p></div>
+      <div class="rule"><span class="num">03</span><p>Запальничка спільна, поки не зникає назавжди.</p></div>
+      <div class="rule"><span class="num">04</span><p>Дощ — не привід, парасольку — привід.</p></div>
+      <div class="rule"><span class="num">05</span><p>Начальник у колі — говорить як усі, слухає уважніше.</p></div>
+      <div class="rule"><span class="num">06</span><p>Хто зайняв тему — той її і закриває.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Розклад сесій</h2>
+    <p class="sub">Неофіційний, але дотримується точніше за офіційний.</p>
+    <div class="board">
+      <div class="board-row">
+        <span class="board-time">10:30</span>
+        <span class="board-name">Ранкова — прокинутись остаточно</span>
+        <span class="board-tag">коротка</span>
+      </div>
+      <div class="board-row">
+        <span class="board-time">13:00</span>
+        <span class="board-name">Після обіду — перетравити і новини</span>
+        <span class="board-tag">людно</span>
+      </div>
+      <div class="board-row">
+        <span class="board-time">15:30</span>
+        <span class="board-name">Реанімаційна — коли нарада не відпускає</span>
+        <span class="board-tag">терміново</span>
+      </div>
+      <div class="board-row">
+        <span class="board-time">17:45</span>
+        <span class="board-name">Підсумкова — перед тим як розійтись</span>
+        <span class="board-tag">без поспіху</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Хто зараз тут</h2>
+    <p class="sub">Постійний склад перекурні — склад змінюється, дух лишається.</p>
+    <div class="roster">
+      <div class="card">
+        <div class="chip">ОК</div>
+        <div><h3>Оля з бухгалтерії</h3><p>Знає все про всіх на два кварталии вперед.</p></div>
+      </div>
+      <div class="card">
+        <div class="chip">ІМ</div>
+        <div><h3>Ігор з розробки</h3><p>Приходить «на хвилинку», лишається на всі сесії.</p></div>
+      </div>
+      <div class="card">
+        <div class="chip">СП</div>
+        <div><h3>Світлана з продажів</h3><p>Головний новинний канал компанії.</p></div>
+      </div>
+      <div class="card">
+        <div class="chip">ДТ</div>
+        <div><h3>Дмитро, тімлід</h3><p>Тут — просто ще один курець, не начальник.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="mark">ПЕРЕ<span>КУРНЯ</span></div>
+  <div class="plaque">заснована на здоровому глузді, не на здоров'ї · демо-сторінка</div>
+</footer>
+
+</body></html>
