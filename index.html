@@ -204,6 +204,35 @@
     padding: 0.2rem 0.6rem;
     white-space: nowrap;
   }
+  .board-join{
+    flex: none;
+    display:flex; align-items:center; gap: 0.5rem;
+  }
+  .board-count{
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.78rem;
+    color: rgba(236,227,212,0.6);
+    min-width: 3.4ch;
+    text-align: right;
+  }
+  .join-btn{
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--paper);
+    background: transparent;
+    border: 1px solid rgba(236,227,212,0.3);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .join-btn:hover{ border-color: var(--ember); }
+  .join-btn.joined{
+    background: var(--ember);
+    border-color: var(--ember);
+    color: var(--ink);
+    font-weight: 600;
+  }
 
   /* ---------- ROSTER ---------- */
   .roster{
@@ -292,25 +321,41 @@
     <h2>Розклад сесій</h2>
     <p class="sub">Неофіційний, але дотримується точніше за офіційний.</p>
     <div class="board">
-      <div class="board-row">
+      <div class="board-row" data-session="ranok" data-base="2">
         <span class="board-time">10:30</span>
         <span class="board-name">Ранкова — прокинутись остаточно</span>
         <span class="board-tag">коротка</span>
+        <span class="board-join">
+          <span class="board-count"></span>
+          <button class="join-btn" type="button">Я тут</button>
+        </span>
       </div>
-      <div class="board-row">
+      <div class="board-row" data-session="obid" data-base="5">
         <span class="board-time">13:00</span>
         <span class="board-name">Після обіду — перетравити і новини</span>
         <span class="board-tag">людно</span>
+        <span class="board-join">
+          <span class="board-count"></span>
+          <button class="join-btn" type="button">Я тут</button>
+        </span>
       </div>
-      <div class="board-row">
+      <div class="board-row" data-session="reanimacia" data-base="3">
         <span class="board-time">15:30</span>
         <span class="board-name">Реанімаційна — коли нарада не відпускає</span>
         <span class="board-tag">терміново</span>
+        <span class="board-join">
+          <span class="board-count"></span>
+          <button class="join-btn" type="button">Я тут</button>
+        </span>
       </div>
-      <div class="board-row">
+      <div class="board-row" data-session="pidsumkova" data-base="1">
         <span class="board-time">17:45</span>
         <span class="board-name">Підсумкова — перед тим як розійтись</span>
         <span class="board-tag">без поспіху</span>
+        <span class="board-join">
+          <span class="board-count"></span>
+          <button class="join-btn" type="button">Я тут</button>
+        </span>
       </div>
     </div>
   </div>
@@ -345,5 +390,40 @@
   <div class="mark">ПЕРЕ<span>КУРНЯ</span></div>
   <div class="plaque">заснована на здоровому глузді, не на здоров'ї · демо-сторінка</div>
 </footer>
+
+<script>
+(function(){
+  var STORE_KEY = 'perekurnya-joined';
+  var joined = {};
+  try{ joined = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(e){}
+
+  function save(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(joined)); }catch(e){}
+  }
+
+  document.querySelectorAll('.board-row[data-session]').forEach(function(row){
+    var id = row.dataset.session;
+    var base = parseInt(row.dataset.base, 10) || 0;
+    var btn = row.querySelector('.join-btn');
+    var count = row.querySelector('.board-count');
+
+    function render(){
+      var isIn = !!joined[id];
+      var total = base + (isIn ? 1 : 0);
+      count.textContent = total + (total === 1 ? ' людина' : ' людей');
+      btn.textContent = isIn ? 'Я тут ✓' : 'Я тут';
+      btn.classList.toggle('joined', isIn);
+    }
+
+    btn.addEventListener('click', function(){
+      joined[id] = !joined[id];
+      save();
+      render();
+    });
+
+    render();
+  });
+})();
+</script>
 
 </body></html>
