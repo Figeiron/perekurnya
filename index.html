@@ -12,6 +12,13 @@
     --steel: #55605a;
     --line: rgba(42,35,29,0.16);
     --shadow: rgba(42,35,29,0.18);
+
+    /* fixed "dark plate" palette for hero/board — stays constant regardless of system theme */
+    --plate-bg: #211c18;
+    --plate-fg: #ece3d4;
+    --plate-ember: #e07b3e;
+    --plate-ember-deep: #f0925a;
+    --plate-smoke: #a79e8f;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -71,9 +78,9 @@
     position: relative;
     overflow: hidden;
     background:
-      radial-gradient(ellipse 60% 50% at 30% 0%, var(--paper-raised), transparent 60%),
-      var(--ink);
-    color: var(--paper);
+      radial-gradient(ellipse 60% 50% at 30% 0%, rgba(236,227,212,0.08), transparent 60%),
+      var(--plate-bg);
+    color: var(--plate-fg);
     padding: 5rem 0 6rem;
   }
   .hero .wrap{ position: relative; z-index: 2; }
@@ -105,22 +112,22 @@
 
   .eyebrow{
     display:inline-flex; align-items:center; gap:0.5rem;
-    color: var(--ember-deep);
+    color: var(--plate-ember-deep);
     font-family: ui-monospace, Consolas, monospace;
     text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.75rem;
     margin-bottom: 1.4rem;
   }
   .eyebrow::before{
     content:""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
-    background: var(--ember); box-shadow: 0 0 10px 2px var(--ember);
+    background: var(--plate-ember); box-shadow: 0 0 10px 2px var(--plate-ember);
   }
   .hero h1{
     font-size: clamp(3.2rem, 11vw, 6.4rem);
     line-height: 0.92;
     margin: 0 0 1.1rem;
-    color: var(--paper);
+    color: var(--plate-fg);
   }
-  .hero h1 span{ color: var(--ember); }
+  .hero h1 span{ color: var(--plate-ember); }
   .hero p.lede{
     max-width: 34rem;
     font-size: 1.2rem;
@@ -135,7 +142,7 @@
   .stat b{
     display:block; font-family: ui-monospace, Consolas, monospace;
     font-variant-numeric: tabular-nums;
-    font-size: 1.6rem; color: var(--ember-deep);
+    font-size: 1.6rem; color: var(--plate-ember-deep);
   }
   .stat span{ font-size: 0.78rem; color: rgba(236,227,212,0.6); }
 
@@ -172,8 +179,8 @@
 
   /* ---------- SCHEDULE (split-flap board) ---------- */
   .board{
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--plate-bg);
+    color: var(--plate-fg);
     border-radius: 6px;
     padding: 1rem;
     box-shadow: 0 18px 40px -20px var(--shadow);
@@ -191,14 +198,14 @@
     font-variant-numeric: tabular-nums;
     font-size: 1.7rem;
     letter-spacing: 0.05em;
-    color: var(--ember-deep);
+    color: var(--plate-ember-deep);
     min-width: 5.5ch;
   }
   .board-name{ flex: 1 1 auto; font-size: 1rem; color: rgba(236,227,212,0.86); }
   .board-tag{
     font-family: ui-monospace, Consolas, monospace;
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em;
-    color: var(--smoke);
+    color: var(--plate-smoke);
     border: 1px solid rgba(236,227,212,0.2);
     border-radius: 999px;
     padding: 0.2rem 0.6rem;
@@ -218,7 +225,7 @@
   .join-btn{
     font-family: ui-monospace, Consolas, monospace;
     font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--paper);
+    color: var(--plate-fg);
     background: transparent;
     border: 1px solid rgba(236,227,212,0.3);
     border-radius: 999px;
@@ -226,11 +233,11 @@
     cursor: pointer;
     transition: background 0.15s, border-color 0.15s, color 0.15s;
   }
-  .join-btn:hover{ border-color: var(--ember); }
+  .join-btn:hover{ border-color: var(--plate-ember); }
   .join-btn.joined{
-    background: var(--ember);
-    border-color: var(--ember);
-    color: var(--ink);
+    background: var(--plate-ember);
+    border-color: var(--plate-ember);
+    color: var(--plate-bg);
     font-weight: 600;
   }
 
